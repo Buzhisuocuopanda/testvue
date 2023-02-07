@@ -1,26 +1,34 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <div>
+    <ul>
+      <li v-for="item in randomData" :key="item.id">{{ item.value }}</li>
+    </ul>
+  </div>
 </template>
 
+
+
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "core-js/internals/queue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      randomData: []
+    }
+  },
+  mounted () {
+    axios.get('http://api.com/random-data')
+        .then(response => {
+          this.randomData = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
   }
+
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
